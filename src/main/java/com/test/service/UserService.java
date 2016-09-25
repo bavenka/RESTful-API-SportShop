@@ -2,6 +2,7 @@ package com.test.service;
 
 import com.test.model.dto.UserDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
  */
 @Service
 public interface UserService {
-    UserDto addUser(UserDto userDto) throws Exception;
-    UserDto getUser(Long id) throws Exception;
+    UserDto save(UserDto userDto) throws Exception;
+    UserDto findOne(Long id) throws Exception;
+    UserDto update(UserDto userDto) throws Exception;
+
 }

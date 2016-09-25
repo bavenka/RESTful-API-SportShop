@@ -1,12 +1,23 @@
 package com.test.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.test.model.entity.Role;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Павел on 17.09.2016.
  */
 public class UserDto {
     private Long id;
-    private String name;
+    private String username;
     private String password;
+    private String phone;
+    private Collection<? extends GrantedAuthority> roles;
 
     public UserDto() {
     }
@@ -19,12 +30,12 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -34,4 +45,24 @@ public class UserDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Collection<? extends GrantedAuthority> getRoles() {
+        if(roles == null){
+            roles = new HashSet<>();
+        }
+        return roles;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRoles(Collection<? extends GrantedAuthority> roles) {
+        this.roles = roles;
+    }
+
 }

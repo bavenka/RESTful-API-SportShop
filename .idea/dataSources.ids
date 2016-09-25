@@ -8,20 +8,99 @@
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
       <schema id="1" name="testdb"/>
-      <table id="2" parent="1" name="users"/>
-      <column id="3" parent="2" name="id">
+      <table id="2" parent="1" name="hibernate_sequences"/>
+      <table id="3" parent="1" name="roles"/>
+      <table id="4" parent="1" name="user_role"/>
+      <table id="5" parent="1" name="users"/>
+      <column id="6" parent="2" name="sequence_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="7" parent="2" name="sequence_next_hi_value">
+        <data-type>bigint(20)</data-type>
+      </column>
+      <key id="8" parent="2" name="PRIMARY">
+        <columns>sequence_name</columns>
+        <primary>1</primary>
+      </key>
+      <column id="9" parent="3" name="id">
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="4" parent="2" name="name">
+      <column id="10" parent="3" name="name">
+        <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="5" parent="2" name="password">
-        <data-type>varchar(255)</data-type>
-      </column>
-      <key id="6" parent="2" name="PRIMARY">
+      <index id="11" parent="3" name="UK_ofx66keruapi6vyqpv6f2or37">
+        <columns>name</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="12" parent="3" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
+      </key>
+      <key id="13" parent="3" name="UK_ofx66keruapi6vyqpv6f2or37">
+        <columns>name</columns>
+        <underlying-index>UK_ofx66keruapi6vyqpv6f2or37</underlying-index>
+      </key>
+      <column id="14" parent="4" name="user_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="15" parent="4" name="role_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <index id="16" parent="4" name="FKt7e7djp752sqn6w22i6ocqy6q">
+        <columns>role_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="17" parent="4" name="PRIMARY">
+        <columns>user_id
+role_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="18" parent="4" name="FKj345gk1bovqvfame88rcx7yyx">
+        <columns>user_id</columns>
+        <ref-key>~.users.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="19" parent="4" name="FKt7e7djp752sqn6w22i6ocqy6q">
+        <columns>role_id</columns>
+        <ref-key>~.roles.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="20" parent="5" name="id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="21" parent="5" name="password">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="22" parent="5" name="phone">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="23" parent="5" name="username">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="24" parent="5" name="UK_r43af9ap4edm43mmtq01oddj6">
+        <columns>username</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="25" parent="5" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <key id="26" parent="5" name="UK_r43af9ap4edm43mmtq01oddj6">
+        <columns>username</columns>
+        <underlying-index>UK_r43af9ap4edm43mmtq01oddj6</underlying-index>
       </key>
     </database-model>
   </data-source>
