@@ -1,0 +1,15 @@
+package com.test.utils;
+
+/**
+ * Created by Павел on 27.09.2016.
+ */
+public class ConstantUtils {
+    public static final String LOGIN_EMAIL = "kinopoisk.test@gmail.com";
+    public static final String PASSWORD_EMAIL = "100200300s";
+    public static final String PASSWORD_RECOVERY_MESSAGE = "Hello, this is your password for SoN:  ";
+
+    public static final String MESSAGE_EXIST = " is already exist.";
+    public static final String MESSAGE_INVALID_DATA = "Invalid input data ( == null).";
+    public static final String MESSAGE_FAILED_REQUEST = "Request failed.";
+    public static final String MESSAGE_NOT_FOUND_USER = "User is not found.";
+}

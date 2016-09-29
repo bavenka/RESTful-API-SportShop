@@ -11,25 +11,23 @@ import org.springframework.web.bind.annotation.*;
  * Created by Павел on 17.09.2016.
  */
 @RestController
-@RequestMapping("users")
+@RequestMapping("${route.users}")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getUser(@PathVariable Long id) throws Exception {
-        UserDto userDto;
-        try{
-            userDto = userService.findOne(id);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        UserDto userDto = userService.findOne(id);
+        if(userDto == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDto, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public ResponseEntity<?> getUser(@RequestBody UserDto userDto,
-                                     @RequestHeader("${token.header}") String token) throws Exception {
+                                     @RequestHeader("token") String token) throws Exception {
         UserDto existingUserDto;
         try{
             existingUserDto = userService.update(userDto);

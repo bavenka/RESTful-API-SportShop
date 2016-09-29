@@ -39,7 +39,7 @@ public class AuthController {
                                                    Device device) {
         String token = authService.getToken(username, password, device);
         if (token == null) {
-            return ResponseEntity.badRequest().body(null);
+            return  new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(token, HttpStatus.OK);
     }

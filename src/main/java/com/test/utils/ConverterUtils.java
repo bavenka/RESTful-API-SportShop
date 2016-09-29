@@ -17,6 +17,7 @@ public class ConverterUtils {
     public static User toUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhone(userDto.getPhone());
@@ -36,6 +37,7 @@ public class ConverterUtils {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setPhone(user.getPhone());
         Set<Role> roles = user.getRoles();

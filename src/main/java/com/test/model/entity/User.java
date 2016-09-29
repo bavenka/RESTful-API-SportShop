@@ -1,6 +1,7 @@
 package com.test.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -12,8 +13,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends BasicEntity{
-    @Column(nullable = false, unique = true)
     private String username;
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -22,7 +23,17 @@ public class User extends BasicEntity{
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private PasswordResetToken passwordResetToken;
     public User() {
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPhone() {
@@ -55,5 +66,13 @@ public class User extends BasicEntity{
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public PasswordResetToken getPasswordResetToken() {
+        return passwordResetToken;
+    }
+
+    public void setPasswordResetToken(PasswordResetToken passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
     }
 }
