@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class MailController {
     @Autowired
     private MailService mailService;
+
     @RequestMapping(value = "{userId}/resetPassword", method = RequestMethod.POST)
-    public ResponseEntity<?> sendToken(@PathVariable("userId") Long userId,@RequestParam String email) throws Exception {
+    public ResponseEntity<?> sendMessage(@PathVariable("userId") Long userId, @RequestParam String email) throws Exception {
         SimpleMailMessage mailMessage;
         try {
-            mailMessage = mailService.sendTokenToEmail(userId, email);
+            mailMessage = mailService.sendMessage(userId, email);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

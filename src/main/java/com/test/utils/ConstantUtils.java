@@ -5,8 +5,7 @@ package com.test.utils;
  */
 public class ConstantUtils {
     public static final String LOGIN_EMAIL = "kinopoisk.test@gmail.com";
-    public static final String PASSWORD_EMAIL = "100200300s";
-    public static final String PASSWORD_RECOVERY_MESSAGE = "Hello, this is your password for SoN:  ";
+    public static final String PASSWORD_RESET_SUBJECT = "Reset password";
 
     public static final String MESSAGE_EXIST = " is already exist.";
     public static final String MESSAGE_INVALID_DATA = "Invalid input data ( == null).";

@@ -13,7 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -30,7 +30,7 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
 
     @Override
-    public SimpleMailMessage sendTokenToEmail(Long userId, String email) throws Exception {
+    public SimpleMailMessage sendMessage(Long userId, String email) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null) {
             throw new Exception("User is not found!");
@@ -46,8 +46,14 @@ public class MailServiceImpl implements MailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setFrom(ConstantUtils.LOGIN_EMAIL);
-        mailMessage.setSubject("Reset password");
-        mailMessage.setText(passwordResetToken.getToken());
+        mailMessage.setSubject(ConstantUtils.PASSWORD_RESET_SUBJECT);
+        mailMessage.setSentDate(new Date());
+        mailMessage.setText("Dear " + user.getUsername()
+        + ",\n\n" + "To the reset your password, copy this hash code"
+                + " and past in the requested field of web site: "
+                + "\n\n" + passwordResetToken.getToken() + "\n\n"
+                + "With respect," + "\n\n" + "Kinopoisk.by"
+         );
         mailSender.send(mailMessage);
         return mailMessage;
     }

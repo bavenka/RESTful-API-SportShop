@@ -12,5 +12,5 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public interface MailService {
 
-    SimpleMailMessage sendTokenToEmail(Long userId, String email) throws Exception;
+    SimpleMailMessage sendMessage(Long userId, String email) throws Exception;
 }
