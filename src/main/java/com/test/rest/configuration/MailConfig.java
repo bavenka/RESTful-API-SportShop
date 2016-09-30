@@ -13,30 +13,43 @@ import java.util.Properties;
  */
 @Configuration
 public class MailConfig {
-    @Value("${email.host}")
+    @Value("${mail.protocol}")
+    private String protocol;
+    @Value("${mail.host}")
     private String host;
+    @Value("${mail.port}")
+    private int port;
+    @Value("${mail.smtp.auth}")
+    private boolean auth;
+    @Value("${mail.smtp.starttls.enable}")
+    private boolean starttls;
+    @Value("${mail.smtp.debug}")
+    private boolean debug;
+    @Value("${mail.from}")
+    private String from;
+    @Value("${mail.username}")
+    private String username;
+    @Value("${mail.password}")
+    private String password;
 
-    @Value("${email.port}")
-    private Integer port;
 
     @Bean
     public JavaMailSender javaMailService() {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-
-        javaMailSender.setHost(host);
-        javaMailSender.setPort(port);
-
-        javaMailSender.setJavaMailProperties(getMailProperties());
-
-        return javaMailSender;
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setJavaMailProperties(getMailProperties());
+        mailSender.setHost(host);
+        mailSender.setPort(port);
+        mailSender.setProtocol(protocol);
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
+        return mailSender;
     }
 
     private Properties getMailProperties() {
         Properties properties = new Properties();
-        properties.setProperty("mail.transport.protocol", "smtp");
-        properties.setProperty("mail.smtp.auth", "true");
-        properties.setProperty("mail.smtp.starttls.enable", "true");
-        properties.setProperty("mail.debug", "true");
+        properties.put("mail.smtp.auth", auth);
+        properties.put("mail.smtp.starttls.enable", starttls);
+        properties.put("mail.debug", debug);
         return properties;
     }
 }

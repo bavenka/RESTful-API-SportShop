@@ -49,10 +49,8 @@ public class MailServiceImpl implements MailService {
         mailMessage.setSubject(ConstantUtils.PASSWORD_RESET_SUBJECT);
         mailMessage.setSentDate(new Date());
         mailMessage.setText("Dear " + user.getUsername()
-        + ",\n\n" + "To the reset your password, copy this hash code"
-                + " and past in the requested field of web site: "
-                + "\n\n" + passwordResetToken.getToken() + "\n\n"
-                + "With respect," + "\n\n" + "Kinopoisk.by"
+        + ConstantUtils.PASSWORD_RESET_TEXT + passwordResetToken.getToken()
+
          );
         mailSender.send(mailMessage);
         return mailMessage;
