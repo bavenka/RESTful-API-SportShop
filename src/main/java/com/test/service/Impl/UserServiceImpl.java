@@ -4,11 +4,11 @@ import com.test.model.dto.TokenDto;
 import com.test.model.entity.PasswordResetToken;
 import com.test.model.entity.User;
 import com.test.model.dto.UserDto;
-import com.test.repository.TokenRepository;
+import com.test.repository.PasswordResetTokenRepository;
 import com.test.repository.UserRepository;
 import com.test.service.UserService;
-import com.test.utils.ConstantUtils;
-import com.test.utils.ConverterUtils;
+import com.test.utils.Constant;
+import com.test.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private TokenRepository tokenRepository;
+    private PasswordResetTokenRepository passwordResetTokenRepository;
     @Value("${token.expiration}")
     private Long tokenExpiration;
 
@@ -33,15 +33,24 @@ public class UserServiceImpl implements UserService {
     public UserDto save(UserDto userDto) throws Exception {
         if (userDto == null || userDto.getUsername() == null
                 || userDto.getPassword() == null || userDto.getPhone() == null) {
-            throw new Exception(ConstantUtils.MESSAGE_INVALID_DATA);
+            throw new Exception(Constant.MESSAGE_INVALID_DATA);
         }
         if (userRepository.findByUsername(userDto.getUsername()) != null) {
-            throw new Exception("Username " + userDto.getUsername() + ConstantUtils.MESSAGE_EXIST);
+            throw new Exception("Username "
+                    + userDto.getUsername()
+                    + Constant.MESSAGE_EXIST
+            );
         }
-        User user = ConverterUtils.toUser(userDto);
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+            throw new Exception("Email "
+                    + userDto.getEmail()
+                    + Constant.MESSAGE_EXIST
+            );
+        }
+        User user = Converter.toUser(userDto);
         User existingUser = userRepository.save(user);
         if (existingUser == null) {
-            throw new Exception(ConstantUtils.MESSAGE_FAILED_REQUEST);
+            throw new Exception(Constant.MESSAGE_FAILED_REQUEST);
         }
         return userDto;
     }
@@ -52,34 +61,46 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return null;
         }
-        return ConverterUtils.toUserDto(user);
+        return Converter.toUserDto(user);
     }
 
     @Override
     public UserDto update(UserDto userDto) throws Exception {
         if (userDto.getId() == null ||
                 userDto.getPhone() == null) {
-            throw new Exception(ConstantUtils.MESSAGE_INVALID_DATA);
+            throw new Exception(Constant.MESSAGE_INVALID_DATA);
         }
         User user = userRepository.findOne(userDto.getId());
         if (user == null) {
-            throw new Exception(ConstantUtils.MESSAGE_NOT_FOUND_USER);
+            throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
         user.setPhone(userDto.getPhone());
         User existingUser = userRepository.save(user);
         if (existingUser == null) {
-            throw new Exception(ConstantUtils.MESSAGE_FAILED_REQUEST);
+            throw new Exception(Constant.MESSAGE_FAILED_REQUEST);
         }
         return userDto;
     }
 
     @Override
     public PasswordResetToken createPasswordResetTokenForUser(User user, String token) {
-        PasswordResetToken passwordResetToken = new PasswordResetToken();
-        passwordResetToken.setToken(token);
-        passwordResetToken.setExpiration(new Date(tokenExpiration));
-        passwordResetToken.setUser(user);
-        return tokenRepository.save(passwordResetToken);
+        PasswordResetToken passwordResetPasswordResetToken = new PasswordResetToken();
+        passwordResetPasswordResetToken.setToken(token);
+        passwordResetPasswordResetToken.setExpiration(new Date(tokenExpiration));
+        passwordResetPasswordResetToken.setUser(user);
+        return passwordResetTokenRepository.save(passwordResetPasswordResetToken);
+    }
+
+    @Override
+    public TokenDto getToken(Long userId, String token) throws Exception {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByName(token);
+        if(passwordResetToken == null){
+            return null;
+        }
+        if(!passwordResetToken.getUser().getId().equals(userId)){
+            throw new Exception(Constant.MESSAGE_INVALID_DATA);
+        }
+        return Converter.toTokenDto(passwordResetToken);
     }
 
 }

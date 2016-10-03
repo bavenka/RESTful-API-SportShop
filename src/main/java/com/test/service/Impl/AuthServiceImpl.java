@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private UserDetailsService userDetailsService;
 
     @Override
-    public String getToken(String username, String password, Device device) {
+    public String createToken(String username, String password, Device device) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username,

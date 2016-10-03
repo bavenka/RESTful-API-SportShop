@@ -1,4 +1,6 @@
 package com.test.model.entity;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -7,9 +9,10 @@ import java.util.Date;
  * Created by Павел on 28.09.2016.
  */
 @Entity
-@Table(name = "password_reset_tokens")
+@Table(name = "tokens")
 public class PasswordResetToken extends BasicEntity{
     @NotNull
+    @NotEmpty
     private String token;
     private Date expiration;
     @OneToOne(fetch = FetchType.LAZY)

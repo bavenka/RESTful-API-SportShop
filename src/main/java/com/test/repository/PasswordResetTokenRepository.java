@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
  * Created by Павел on 29.09.2016.
  */
 @Service
-public interface TokenRepository extends CrudRepository<PasswordResetToken, Long> {
+public interface PasswordResetTokenRepository extends CrudRepository<PasswordResetToken, Long> {
+    PasswordResetToken findByName(String token);
 }

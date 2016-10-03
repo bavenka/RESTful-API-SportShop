@@ -10,5 +10,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Service
 public interface AuthService {
-    String getToken(String username, String password, Device device);
+    String createToken(String username, String password, Device device);
 }

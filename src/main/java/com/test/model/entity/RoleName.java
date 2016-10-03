@@ -5,5 +5,6 @@ package com.test.model.entity;
  */
 public enum RoleName {
     USER,
-    ADMIN
+    ADMIN,
+    MODERATOR
 }

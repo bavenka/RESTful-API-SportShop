@@ -1,5 +1,7 @@
 package com.test.utils;
 
+import com.test.model.dto.TokenDto;
+import com.test.model.entity.PasswordResetToken;
 import com.test.model.entity.Role;
 import com.test.model.entity.User;
 import com.test.model.dto.UserDto;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Павел on 17.09.2016.
  */
-public class ConverterUtils {
+public class Converter {
     public static User toUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
@@ -49,5 +51,13 @@ public class ConverterUtils {
             userDto.setRoles(collection);
         }
         return userDto;
+    }
+
+    public static TokenDto toTokenDto(PasswordResetToken passwordResetToken){
+        TokenDto tokenDto = new TokenDto();
+        tokenDto.setId(passwordResetToken.getId());
+        tokenDto.setToken(passwordResetToken.getToken());
+        tokenDto.setExpiration(passwordResetToken.getExpiration());
+        return tokenDto;
     }
 }

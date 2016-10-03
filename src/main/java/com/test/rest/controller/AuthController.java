@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by Павел on 19.09.2016.
  */
@@ -37,7 +35,7 @@ public class AuthController {
     public ResponseEntity<?> authenticationRequest(@RequestParam String username,
                                                    @RequestParam String password,
                                                    Device device) {
-        String token = authService.getToken(username, password, device);
+        String token = authService.createToken(username, password, device);
         if (token == null) {
             return  new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
