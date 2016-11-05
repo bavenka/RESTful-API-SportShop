@@ -1,5 +1,8 @@
 package com.test.model.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -13,46 +16,19 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends BasicEntity {
-    @NotNull
-    @NotEmpty
     private String username;
-    @NotNull
-    @NotEmpty
     private String email;
-    @NotNull
-    @NotEmpty
     private String password;
-    @NotNull
-    @NotEmpty
     private String phone;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private PasswordResetToken passwordResetToken;
 
     public User() {
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
 
     public String getUsername() {
         return username;
@@ -62,6 +38,13 @@ public class User extends BasicEntity {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -69,6 +52,14 @@ public class User extends BasicEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Set<Role> getRoles() {

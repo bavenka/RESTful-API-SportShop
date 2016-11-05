@@ -1,9 +1,6 @@
 package com.test.service;
 
-import com.test.model.dto.TokenDto;
 import com.test.model.dto.UserDto;
-import com.test.model.entity.PasswordResetToken;
-import com.test.model.entity.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +11,4 @@ public interface UserService {
     UserDto save(UserDto userDto) throws Exception;
     UserDto findOne(Long id) throws Exception;
     UserDto update(UserDto userDto) throws Exception;
-    PasswordResetToken createPasswordResetTokenForUser(User user, String token);
-    TokenDto getToken(Long userId, String token) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.test.service.Impl;
 
 import com.test.utils.JwtUtils;
 import com.test.service.AuthService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -32,7 +33,9 @@ public class AuthServiceImpl implements AuthService {
     private UserDetailsService userDetailsService;
 
     @Override
-    public String createToken(String username, String password, Device device) {
+    public String createToken(@NonNull String username,
+                              @NonNull String password,
+                              @NonNull Device device) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username,
@@ -42,4 +45,5 @@ public class AuthServiceImpl implements AuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return jwtUtils.generateToken(userDetails, device);
     }
+
 }

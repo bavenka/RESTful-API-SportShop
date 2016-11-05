@@ -1,8 +1,7 @@
 package com.test.model.entity;
-import org.hibernate.validator.constraints.NotEmpty;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -11,13 +10,12 @@ import java.util.Date;
 @Entity
 @Table(name = "tokens")
 public class PasswordResetToken extends BasicEntity{
-    @NotNull
-    @NotEmpty
     private String token;
     private Date expiration;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     public PasswordResetToken() {
     }
 

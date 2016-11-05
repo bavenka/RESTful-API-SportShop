@@ -13,6 +13,9 @@ public class Constant {
     public static final String PASSWORD_RESET_AUTHOR = "Yours truly," + "\r\n" + "Pavel Kovalchuk";
     public static final String MESSAGE_EXIST = " is already exist.";
     public static final String MESSAGE_INVALID_DATA = "Invalid input data ( == null).";
-    public static final String MESSAGE_FAILED_REQUEST = "Request failed.";
     public static final String MESSAGE_NOT_FOUND_USER = "User is not found.";
+    public static final String MESSAGE_NOT_CONSTRUCTED_TOKEN = "Token is not constructed.";
+    public static final String NOT_CONSTRUCTED_MESSAGE = "Message is not constructed.";
+    public static final String MESSAGE_NOT_VALID_TOKEN = "Token is not valid. Please request code generation again.";
+    public static final int AMOUNT_MINUTES_VALID_TOKEN = 5;
 }

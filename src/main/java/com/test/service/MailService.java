@@ -1,5 +1,8 @@
 package com.test.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.test.model.entity.User;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -14,5 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public interface MailService {
 
-    SimpleMailMessage sendMessage(HttpServletRequest request, Long userId, String email) throws Exception;
+    void sendMessage(HttpServletRequest request, Long userId, String email) throws Exception;
+    SimpleMailMessage constructMessage(HttpServletRequest request, User user,String token, String email);
 }

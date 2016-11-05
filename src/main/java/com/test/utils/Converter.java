@@ -1,6 +1,6 @@
 package com.test.utils;
 
-import com.test.model.dto.TokenDto;
+import com.test.model.dto.PasswordResetTokenDto;
 import com.test.model.entity.PasswordResetToken;
 import com.test.model.entity.Role;
 import com.test.model.entity.User;
@@ -23,8 +23,8 @@ public class Converter {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPhone(userDto.getPhone());
-        Set<GrantedAuthority> collection = userDto.getRoles().stream().collect(Collectors.toSet());
-        if(!collection.isEmpty()) {
+        if (userDto.getRoles() != null) {
+            Set<GrantedAuthority> collection = userDto.getRoles().stream().collect(Collectors.toSet());
             Set<Role> roles = new HashSet<>();
             for (GrantedAuthority grantedAuthority : collection) {
                 Role role = new Role();
@@ -42,10 +42,10 @@ public class Converter {
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setPhone(user.getPhone());
-        Set<Role> roles = user.getRoles();
-        if(roles != null){
+        if (user.getRoles() != null) {
+            Set<Role> roles = user.getRoles();
             Set<GrantedAuthority> collection = new HashSet<>();
-            for(Role role : roles){
+            for (Role role : roles) {
                 collection.add(new SimpleGrantedAuthority(role.getName()));
             }
             userDto.setRoles(collection);
@@ -53,11 +53,11 @@ public class Converter {
         return userDto;
     }
 
-    public static TokenDto toTokenDto(PasswordResetToken passwordResetToken){
-        TokenDto tokenDto = new TokenDto();
-        tokenDto.setId(passwordResetToken.getId());
-        tokenDto.setToken(passwordResetToken.getToken());
-        tokenDto.setExpiration(passwordResetToken.getExpiration());
-        return tokenDto;
+    public static PasswordResetTokenDto toTokenDto(PasswordResetToken passwordResetToken) {
+        PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto();
+        passwordResetTokenDto.setId(passwordResetToken.getId());
+        passwordResetTokenDto.setToken(passwordResetToken.getToken());
+        passwordResetTokenDto.setExpiration(passwordResetToken.getExpiration());
+        return passwordResetTokenDto;
     }
 }

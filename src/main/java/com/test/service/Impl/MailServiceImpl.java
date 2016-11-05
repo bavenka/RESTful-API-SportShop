@@ -4,8 +4,10 @@ import com.test.model.entity.PasswordResetToken;
 import com.test.model.entity.User;
 import com.test.repository.UserRepository;
 import com.test.service.MailService;
+import com.test.service.PasswordResetTokenService;
 import com.test.service.UserService;
 import com.test.utils.Constant;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -27,35 +29,46 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserService userService;
+    private PasswordResetTokenService passwordResetTokenService;
     @Autowired
     private JavaMailSender mailSender;
     @Value("${mail.from}")
     private String from;
 
     @Override
-    public SimpleMailMessage sendMessage(HttpServletRequest request, Long userId, String email) throws Exception {
+    public void sendMessage(HttpServletRequest request,
+                            @NonNull Long userId,
+                            @NonNull String email) throws Exception {
         User user = userRepository.findOne(userId);
-        if (user == null) {
-            throw new Exception("User is not found!");
+        if (user == null
+                || !user.getEmail().equals(email)) {
+            throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
-        if (!user.getEmail().equals(email)) {
-            throw new Exception("Email is not correct!");
-        }
-        String token = UUID.randomUUID().toString();
-        PasswordResetToken passwordResetPasswordResetToken = userService.createPasswordResetTokenForUser(user, token);
+        PasswordResetToken passwordResetPasswordResetToken = passwordResetTokenService.constructPasswordResetTokenForUser(user);
         if (passwordResetPasswordResetToken == null) {
-            throw new Exception("PasswordResetToken is not created!");
+            throw new Exception(Constant.MESSAGE_NOT_CONSTRUCTED_TOKEN);
         }
+        SimpleMailMessage simpleMailMessage = constructMessage(request, user, passwordResetPasswordResetToken.getToken(), email);
+        if (simpleMailMessage == null) {
+            throw new Exception(Constant.NOT_CONSTRUCTED_MESSAGE);
+        }
+        mailSender.send(simpleMailMessage);
+    }
+
+    @Override
+    public SimpleMailMessage constructMessage(HttpServletRequest request,
+                                              @NonNull User user,
+                                              @NonNull String token,
+                                              @NonNull String email) {
         String appUrl = "http://"
                 + request.getServerName()
                 + ":"
                 + request.getServerPort()
                 + request.getContextPath()
-                + "/users/{"
+                + "/users"
+                + "/changePassword?id="
                 + user.getId()
-                + "}/"
-                + "changePassword?token="
+                + "&token="
                 + token;
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
@@ -69,8 +82,6 @@ public class MailServiceImpl implements MailService {
                 + Constant.PASSWORD_RESET_NOTE
                 + Constant.PASSWORD_RESET_AUTHOR
         );
-        mailSender.send(mailMessage);
         return mailMessage;
     }
-
 }
