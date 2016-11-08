@@ -17,5 +17,5 @@ public class Constant {
     public static final String MESSAGE_NOT_CONSTRUCTED_TOKEN = "Token is not constructed.";
     public static final String NOT_CONSTRUCTED_MESSAGE = "Message is not constructed.";
     public static final String MESSAGE_NOT_VALID_TOKEN = "Token is not valid. Please request code generation again.";
-    public static final int AMOUNT_MINUTES_VALID_TOKEN = 5;
+    public static final int AMOUNT_MINUTES_VALID_TOKEN = 10;
 }

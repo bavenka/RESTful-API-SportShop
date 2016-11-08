@@ -64,7 +64,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
         }
         PasswordResetToken passwordResetToken = user.getPasswordResetToken();
         if (!passwordResetToken.getToken().equals(token)
-                || passwordResetToken.getExpiration().after(new Date())) {
+                || passwordResetToken.getExpiration().before(new Date())) {
             passwordResetTokenRepository.delete(passwordResetToken.getId());
             throw new Exception(Constant.MESSAGE_NOT_VALID_TOKEN);
         }
@@ -80,8 +80,8 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
         if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(newPassword));
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         userRepository.save(user);
     }
 }
