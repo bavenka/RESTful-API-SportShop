@@ -1,5 +1,5 @@
-package com.test.model.entity;
-import lombok.Data;
+package com.test.model.entity.auth;
+import com.test.model.entity.BasicEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tokens")
-public class PasswordResetToken extends BasicEntity{
+public class PasswordResetToken extends BasicEntity {
     private String token;
     private Date expiration;
     @OneToOne

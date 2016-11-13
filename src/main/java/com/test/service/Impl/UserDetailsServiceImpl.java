@@ -1,6 +1,6 @@
 package com.test.service.Impl;
 
-import com.test.model.entity.User;
+import com.test.model.entity.auth.User;
 import com.test.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

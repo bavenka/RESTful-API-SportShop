@@ -1,4 +1,4 @@
-package com.test.model.entity;
+package com.test.model.entity.auth;
 
 /**
  * Created by Павел on 18.09.2016.

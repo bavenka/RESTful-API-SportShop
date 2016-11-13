@@ -1,11 +1,10 @@
 package com.test.service.Impl;
 
-import com.test.model.entity.PasswordResetToken;
-import com.test.model.entity.User;
+import com.test.model.entity.auth.PasswordResetToken;
+import com.test.model.entity.auth.User;
 import com.test.repository.UserRepository;
 import com.test.service.MailService;
 import com.test.service.PasswordResetTokenService;
-import com.test.service.UserService;
 import com.test.utils.Constant;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by Павел on 28.09.2016.

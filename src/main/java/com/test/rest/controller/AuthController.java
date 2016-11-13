@@ -32,8 +32,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "signin", method = RequestMethod.POST)
-    public ResponseEntity<?> authenticationRequest(@RequestParam String username,
-                                                   @RequestParam String password,
+    public ResponseEntity<?> authenticationRequest(@RequestParam(name = "username") String username,
+                                                   @RequestParam(name = "password") String password,
                                                    Device device) {
         String token = authService.createToken(username, password, device);
         if (token == null) {

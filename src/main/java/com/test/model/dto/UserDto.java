@@ -16,6 +16,8 @@ public class UserDto {
     private String email;
     private String password;
     private String phone;
+    private String name;
+    private AddressDto address;
     private Collection<? extends GrantedAuthority> roles;
 
     public UserDto() {

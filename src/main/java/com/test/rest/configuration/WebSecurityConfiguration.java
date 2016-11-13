@@ -33,8 +33,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService);
-                //.passwordEncoder(passwordEncoder());
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -70,6 +70,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/users/resetPassword**").permitAll()
                 .antMatchers("/users/changePassword**").permitAll()
+               // .antMatchers("/roles**").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
         httpSecurity
                 .addFilterBefore(authenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 /**
  * Created by Павел on 17.09.2016.
  */
@@ -19,7 +21,7 @@ public class UserController {
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getUser(@PathVariable Long id) throws Exception {
         UserDto userDto = userService.findOne(id);
-        if(userDto == null) {
+        if (userDto == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDto, HttpStatus.FOUND);
@@ -27,11 +29,37 @@ public class UserController {
 
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public ResponseEntity<?> getUser(@RequestBody UserDto userDto,
-                                     @RequestHeader("token") String token) throws Exception {
+                                     @RequestHeader(name = "Authorization") String token) throws Exception {
         UserDto existingUserDto;
-        try{
+        try {
             existingUserDto = userService.update(userDto);
-        }catch (Exception e){
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "{userId}/setrole/{roleId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> setRoleToUser(@PathVariable("userId") Long userId,
+                                           @PathVariable("roleId") Long roleId,
+                                           @RequestHeader(name = "Authorization") String token) throws Exception {
+        UserDto existingUserDto;
+        try {
+            existingUserDto = userService.setRoleToUser(userId, roleId);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "{userId}/deleterole/{roleId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> deleteRoleFromUser(@PathVariable("userId") Long userId,
+                                                @PathVariable("roleId") Long roleId,
+                                                @RequestHeader(name = "Authorization") String token) throws Exception {
+        UserDto existingUserDto;
+        try {
+            existingUserDto = userService.deleteRoleFromUser(userId, roleId);
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(existingUserDto, HttpStatus.OK);

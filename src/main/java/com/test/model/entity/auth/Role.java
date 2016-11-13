@@ -1,6 +1,6 @@
-package com.test.model.entity;
+package com.test.model.entity.auth;
 
-import lombok.Data;
+import com.test.model.entity.BasicEntity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "roles")
-public class Role extends BasicEntity{
+public class Role extends BasicEntity {
     @Column(nullable = false, unique = true)
     private String name;
     @ManyToMany(mappedBy = "roles")

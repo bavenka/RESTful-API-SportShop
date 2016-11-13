@@ -1,12 +1,8 @@
-package com.test.model.entity;
+package com.test.model.entity.auth;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.test.model.entity.BasicEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -16,9 +12,17 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends BasicEntity {
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String name;
+    @Embedded
+    private Address address;
+    @Column(nullable = false)
     private String phone;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
@@ -76,5 +80,21 @@ public class User extends BasicEntity {
 
     public void setPasswordResetToken(PasswordResetToken passwordResetToken) {
         this.passwordResetToken = passwordResetToken;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

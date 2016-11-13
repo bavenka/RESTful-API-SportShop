@@ -1,10 +1,8 @@
 package com.test.service;
 
-import com.test.model.entity.PasswordResetToken;
-import com.test.model.entity.User;
+import com.test.model.entity.auth.PasswordResetToken;
+import com.test.model.entity.auth.User;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Павел on 04.10.2016.

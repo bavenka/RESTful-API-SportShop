@@ -1,21 +1,17 @@
 package com.test.service.Impl;
 
-import com.test.model.entity.PasswordResetToken;
-import com.test.model.entity.User;
+import com.test.model.entity.auth.PasswordResetToken;
+import com.test.model.entity.auth.User;
 import com.test.repository.PasswordResetTokenRepository;
 import com.test.repository.UserRepository;
-import com.test.service.AuthService;
 import com.test.service.PasswordResetTokenService;
 import com.test.utils.Constant;
 import lombok.NonNull;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
