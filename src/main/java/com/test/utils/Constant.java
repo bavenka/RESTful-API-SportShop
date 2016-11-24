@@ -20,4 +20,8 @@ public class Constant {
     public static final int AMOUNT_MINUTES_VALID_TOKEN = 10;
     public static final String MESSAGE_NOT_FOUND_ROLE = "Role is not found.";
     public static final String MESSAGE_NOT_VALID_ROLE = "Role is not valid.";
+    public static final String MESSAGE_NOT_FOUND_PRODUCT = "Product is not found.";
+    public static final String MESSAGE_NOT_FOUND_CATEGORY = "Category is not found.";
+    public static final String MESSAGE_NOT_FOUND_CHILD = "Child is not found.";
+    public static final String MESSAGE_NOT_FOUND_PARENT = "Parent is not found.";
 }

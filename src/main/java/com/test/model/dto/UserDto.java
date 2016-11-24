@@ -1,5 +1,6 @@
 package com.test.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -9,6 +10,7 @@ import java.util.Collection;
 /**
  * Created by Павел on 17.09.2016.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class UserDto {
     private Long id;

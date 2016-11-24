@@ -1,8 +1,11 @@
 package com.test.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * Created by Anastasia on 09.08.2016.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDto {
     private String street;
     private String city;

@@ -68,9 +68,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/users/resetPassword**").permitAll()
-                .antMatchers("/users/changePassword**").permitAll()
-               // .antMatchers("/roles**").hasAuthority("ADMIN")
+                .antMatchers("/search**").permitAll()
+                .antMatchers("/users/resetPassword**","/users/changePassword**","/users/{\\d+}/reviews/{\\d+}").permitAll()
+                .antMatchers("/categories","/categories/{\\d+}").permitAll()
+                .antMatchers("/catalog","catalog/{\\d+}","/catalog/{\\d+}/reviews","/catalog/{\\d+}/specifications").permitAll()
                 .anyRequest().authenticated();
         httpSecurity
                 .addFilterBefore(authenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);

@@ -1,8 +1,11 @@
 package com.test.model.entity.auth;
 
 import com.test.model.entity.BasicEntity;
+import com.test.model.entity.product.Product;
+import com.test.model.entity.product.Review;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +33,11 @@ public class User extends BasicEntity {
     private Set<Role> roles;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private PasswordResetToken passwordResetToken;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> productReviews;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_wishProduct", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private Set<Product> wishProducts;
 
     public User() {
     }
@@ -96,5 +104,21 @@ public class User extends BasicEntity {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Review> getProductReviews() {
+        return productReviews;
+    }
+
+    public void setProductReviews(List<Review> productReviews) {
+        this.productReviews = productReviews;
+    }
+
+    public Set<Product> getWishProducts() {
+        return wishProducts;
+    }
+
+    public void setWishProducts(Set<Product> wishProducts) {
+        this.wishProducts = wishProducts;
     }
 }

@@ -101,10 +101,6 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles() == null) {
             throw new Exception("User has not a role!");
         }
-        Role role = roleRepository.findOne(roleId);
-        if (role == null) {
-            throw new Exception(Constant.MESSAGE_NOT_VALID_ROLE);
-        }
         Set<Role> roles = user.getRoles();
         for(Role userRole: roles){
             if(userRole.getId().equals(roleId)){
