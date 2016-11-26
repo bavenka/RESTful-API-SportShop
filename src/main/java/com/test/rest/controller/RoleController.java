@@ -43,7 +43,7 @@ public class RoleController {
         }
         return new ResponseEntity<>(existingRoleDto, HttpStatus.OK);
     }
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> addRole(@PathVariable Long id,
                                      @RequestHeader(name = "Authorization") String token) throws Exception {
         try {

@@ -19,10 +19,10 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getUser(@PathVariable Long id) throws Exception {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) throws Exception {
         UserDto userDto = userService.findOne(id);
         if (userDto == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDto, HttpStatus.FOUND);
     }
@@ -39,7 +39,7 @@ public class UserController {
         return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{userId}/setrole/{roleId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{userId}/add/role/{roleId}", method = RequestMethod.PUT)
     public ResponseEntity<?> setRoleToUser(@PathVariable("userId") Long userId,
                                            @PathVariable("roleId") Long roleId,
                                            @RequestHeader(name = "Authorization") String token) throws Exception {
@@ -52,7 +52,7 @@ public class UserController {
         return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{userId}/deleterole/{roleId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{userId}/delete/role/{roleId}", method = RequestMethod.PUT)
     public ResponseEntity<?> deleteRoleFromUser(@PathVariable("userId") Long userId,
                                                 @PathVariable("roleId") Long roleId,
                                                 @RequestHeader(name = "Authorization") String token) throws Exception {

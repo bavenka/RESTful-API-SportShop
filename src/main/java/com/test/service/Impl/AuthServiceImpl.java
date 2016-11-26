@@ -45,5 +45,4 @@ public class AuthServiceImpl implements AuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return jwtUtils.generateToken(userDetails, device);
     }
-
 }

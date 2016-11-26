@@ -5,10 +5,15 @@ import com.test.service.AuthService;
 import com.test.service.MailService;
 import com.test.service.PasswordResetTokenService;
 import com.test.service.UserService;
+import com.test.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +33,9 @@ public class PasswordResetTokenController {
     @Autowired
     private UserService userService;
     @Autowired
-    private AuthService authService;
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(HttpServletRequest request,
@@ -53,7 +60,8 @@ public class PasswordResetTokenController {
             if(userDto == null){
                 return ResponseEntity.badRequest().build();
             }
-            String authToken = authService.createToken(userDto.getUsername(), userDto.getPassword(), device);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
+            String authToken = jwtUtils.generateToken(userDetails, device);
             return new ResponseEntity<>(authToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

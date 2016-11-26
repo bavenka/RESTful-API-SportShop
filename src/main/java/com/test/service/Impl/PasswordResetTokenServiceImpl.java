@@ -76,7 +76,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
         if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
-        user.setPassword(newPassword);
+        user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userRepository.save(user);
     }
 }

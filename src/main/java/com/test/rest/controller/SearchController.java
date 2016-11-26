@@ -24,8 +24,6 @@ public class SearchController {
     public ResponseEntity<?> getSearchedProducts(@RequestBody Map<String, String> filters,
                                                  @RequestParam("offset") int offset,
                                                  @RequestParam("limit") int limit) throws Exception {
-
-
         List<ProductDto> productDtos;
         try {
             productDtos = searchService.findProductsByFilters(filters, offset, limit);
