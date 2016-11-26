@@ -38,8 +38,7 @@ public class PasswordResetTokenController {
     private JwtUtils jwtUtils;
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public ResponseEntity<?> sendMessage(HttpServletRequest request,
-                                         @RequestParam Long userId,
+    public ResponseEntity<?> sendMessage(@RequestParam Long userId,
                                          @RequestParam String email) throws Exception {
         try {
             mailService.sendMessage(userId, email);
