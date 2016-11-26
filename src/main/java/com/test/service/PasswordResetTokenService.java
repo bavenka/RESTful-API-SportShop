@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public interface PasswordResetTokenService {
     PasswordResetToken constructPasswordResetTokenForUser(User user);
 
-    void isPasswordResetTokenValid(Long userId, String token) throws Exception;
+    boolean isPasswordResetTokenValid(Long userId, String token) throws Exception;
 
     void saveNewPassword(String newPassword) throws Exception;
 }

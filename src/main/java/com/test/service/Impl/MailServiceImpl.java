@@ -32,10 +32,15 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
     @Value("${mail.from}")
     private String from;
+    @Value("${server.name}")
+    private String serverName;
+    @Value("${server.port}")
+    private int serverPort;
+    @Value("${server.contextPath}")
+    private String serverContextPath;
 
     @Override
-    public void sendMessage(HttpServletRequest request,
-                            @NonNull Long userId,
+    public void sendMessage(@NonNull Long userId,
                             @NonNull String email) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null
@@ -43,43 +48,47 @@ public class MailServiceImpl implements MailService {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
         PasswordResetToken passwordResetPasswordResetToken = passwordResetTokenService.constructPasswordResetTokenForUser(user);
-        if (passwordResetPasswordResetToken == null) {
+        if (passwordResetPasswordResetToken == null || passwordResetPasswordResetToken.getToken() == null) {
             throw new Exception(Constant.MESSAGE_NOT_CONSTRUCTED_TOKEN);
         }
-        SimpleMailMessage simpleMailMessage = constructMessage(request, user, passwordResetPasswordResetToken.getToken(), email);
+        String textMessageToResetPassword = constructTextMessageToResetPassword(user, passwordResetPasswordResetToken.getToken());
+        SimpleMailMessage simpleMailMessage = constructMailMessage(textMessageToResetPassword, email);
         if (simpleMailMessage == null) {
             throw new Exception(Constant.NOT_CONSTRUCTED_MESSAGE);
         }
         mailSender.send(simpleMailMessage);
     }
 
-    @Override
-    public SimpleMailMessage constructMessage(HttpServletRequest request,
-                                              @NonNull User user,
-                                              @NonNull String token,
-                                              @NonNull String email) {
-        String appUrl = "http://"
-                + request.getServerName()
+    private String constructLinkToResetPassword(@NonNull User user, @NonNull String token) {
+        return "http://"
+                + serverName
                 + ":"
-                + request.getServerPort()
-                + request.getContextPath()
+                + serverPort
+                + serverContextPath
                 + "/users"
                 + "/changePassword?id="
                 + user.getId()
                 + "&token="
                 + token;
+    }
+
+    private String constructTextMessageToResetPassword(@NonNull User user, @NonNull String token){
+        return Constant.PASSWORD_RESET_GREETING
+                + user.getUsername()
+                + Constant.PASSWORD_RESET_TEXT
+                + constructLinkToResetPassword(user,token)
+                + Constant.PASSWORD_RESET_NOTE
+                + Constant.PASSWORD_RESET_AUTHOR;
+    }
+
+    public SimpleMailMessage constructMailMessage(@NonNull String messageText,
+                                                  @NonNull String email) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setFrom(from);
         mailMessage.setSubject(Constant.PASSWORD_RESET_SUBJECT);
         mailMessage.setSentDate(new Date());
-        mailMessage.setText(Constant.PASSWORD_RESET_GREETING
-                + user.getUsername()
-                + Constant.PASSWORD_RESET_TEXT
-                + appUrl
-                + Constant.PASSWORD_RESET_NOTE
-                + Constant.PASSWORD_RESET_AUTHOR
-        );
+        mailMessage.setText(messageText);
         return mailMessage;
     }
 }

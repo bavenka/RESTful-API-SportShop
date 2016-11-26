@@ -37,33 +37,29 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     public PasswordResetToken constructPasswordResetTokenForUser(@NonNull User user) {
         String token = UUID.randomUUID().toString();
         PasswordResetToken passwordResetToken = user.getPasswordResetToken();
-        if (passwordResetToken != null) {
-            passwordResetToken.setExpiration(DateUtils.addMinutes(new Date(), Constant.AMOUNT_MINUTES_VALID_TOKEN));
-            passwordResetToken.setToken(token);
-            return passwordResetToken;
+        if (passwordResetToken == null) {
+            passwordResetToken = new PasswordResetToken();
         }
-        passwordResetToken = new PasswordResetToken();
-        passwordResetToken.setToken(token);
         passwordResetToken.setExpiration(DateUtils.addMinutes(new Date(), Constant.AMOUNT_MINUTES_VALID_TOKEN));
+        passwordResetToken.setToken(token);
         passwordResetToken.setUser(user);
         return passwordResetTokenRepository.save(passwordResetToken);
     }
 
     @Override
-    public void isPasswordResetTokenValid(@NonNull Long userId,
-                                          @NonNull String token) throws Exception {
+    public boolean isPasswordResetTokenValid(@NonNull Long userId,
+                                             @NonNull String token) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null || user.getPasswordResetToken() == null
                 || !StringUtils.hasText(token)) {
-
             throw new Exception(Constant.MESSAGE_INVALID_DATA);
         }
         PasswordResetToken passwordResetToken = user.getPasswordResetToken();
         if (!passwordResetToken.getToken().equals(token)
                 || passwordResetToken.getExpiration().before(new Date())) {
-            passwordResetTokenRepository.delete(passwordResetToken.getId());
             throw new Exception(Constant.MESSAGE_NOT_VALID_TOKEN);
         }
+        return true;
     }
 
     @Override

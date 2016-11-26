@@ -42,7 +42,7 @@ public class PasswordResetTokenController {
                                          @RequestParam Long userId,
                                          @RequestParam String email) throws Exception {
         try {
-            mailService.sendMessage(request, userId, email);
+            mailService.sendMessage(userId, email);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -54,14 +54,16 @@ public class PasswordResetTokenController {
                                             @RequestParam(name = "token") String token,
                                             Device device) throws Exception {
         UserDto userDto;
+        String authToken = null;
         try {
-            passwordResetTokenService.isPasswordResetTokenValid(userId, token);
-            userDto = userService.findOne(userId);
-            if(userDto == null){
-                return ResponseEntity.badRequest().build();
+            if (passwordResetTokenService.isPasswordResetTokenValid(userId, token)) {
+                userDto = userService.findOne(userId);
+                if (userDto == null) {
+                    return ResponseEntity.badRequest().build();
+                }
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
+                authToken = jwtUtils.generateToken(userDetails, device);
             }
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
-            String authToken = jwtUtils.generateToken(userDetails, device);
             return new ResponseEntity<>(authToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
