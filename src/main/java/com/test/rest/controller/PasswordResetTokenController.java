@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +39,7 @@ public class PasswordResetTokenController {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtUtils jwtUtils;
+
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(HttpServletRequest request,
