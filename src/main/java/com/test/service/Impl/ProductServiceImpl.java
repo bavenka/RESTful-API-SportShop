@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 @Component
 @Transactional
 public class ProductServiceImpl implements ProductService {
-   @Autowired
-   private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -71,14 +71,14 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
         ProductDto productDto = Converter.toProductWithoutSpecificationsDto(product);
-        if(userId != null){
+        if (userId != null) {
             User user = userRepository.findOne(userId);
-            if(user != null){
-                if(user.getWishProducts() != null){
+            if (user != null) {
+                if (user.getWishProducts() != null) {
                     Set<Product> products = user.getWishProducts();
-                    for(Product productEntity : products){
-                        if(productEntity.getId().equals(productId)){
-                            productDto.setFavorite(true);
+                    for (Product productEntity : products) {
+                        if (productEntity.getId().equals(productId)) {
+                            productDto.setIsFavorite(true);
                             break;
                         }
                     }
@@ -126,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
         Set<ReviewDto> reviewDtos = new HashSet<>();
         for (Review review : reviews) {
             ReviewDto reviewDto = Converter.toReviewDto(review);
-            if(review.getUser() != null){
+            if (review.getUser() != null) {
                 reviewDto.setAuthor(review.getUser().getName());
             }
             reviewDtos.add(reviewDto);
@@ -159,7 +159,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto deleteCategoryFromProduct(Long productId) throws Exception {
+    public void deleteCategoryFromProduct(Long productId) throws Exception {
         Product product = productRepository.findOne(productId);
         if (product == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_PRODUCT);
@@ -168,6 +168,24 @@ public class ProductServiceImpl implements ProductService {
             throw new Exception("Product has not a category!");
         }
         product.setCategory(null);
+        productRepository.save(product);
+    }
+
+    @Override
+    public ProductDto setCountToProduct(Long productId, int count) throws Exception {
+        Product product = productRepository.findOne(productId);
+        if (product == null) {
+            throw new Exception(Constant.MESSAGE_NOT_FOUND_PRODUCT);
+        }
+        if (count < 0) {
+            throw new Exception(Constant.MESSAGE_NOT_VALID_COUNT);
+        }
+        int productCount = product.getCount();
+        if(productCount == 0){
+            product.setCount(count);
+        }
+        productCount += count;
+        product.setCount(productCount);
         productRepository.save(product);
         return Converter.toProductWithoutSpecificationsDto(product);
     }

@@ -28,7 +28,7 @@ public class RoleServiceImpl implements RoleService {
         if (role == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_ROLE);
         }
-        if(RoleName.valueOf(roleDto.getName().toUpperCase()) == null){
+        if (RoleName.valueOf(roleDto.getName().toUpperCase()) == null) {
             throw new Exception(Constant.MESSAGE_NOT_VALID_ROLE);
         }
         role.setName(roleDto.getName().toUpperCase());
@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto addRole(@NonNull RoleDto roleDto) throws Exception {
         Role role = Converter.toRole(roleDto);
-        if(RoleName.valueOf(role.getName().toUpperCase()) == null){
+        if (RoleName.valueOf(role.getName().toUpperCase()) == null) {
             throw new Exception(Constant.MESSAGE_NOT_VALID_ROLE);
         }
         roleRepository.save(role);

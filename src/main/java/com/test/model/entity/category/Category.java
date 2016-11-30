@@ -4,7 +4,6 @@ import com.test.model.entity.BasicEntity;
 import com.test.model.entity.product.Product;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,12 +17,13 @@ public class Category extends BasicEntity {
     @Column(nullable = false)
     private String image;
     @ManyToOne
-    @JoinColumn(name= "parent_id")
+    @JoinColumn(name = "parent_id")
     private Category parent;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     private Set<Category> children;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Set<Product> products;
+
     public Category() {
     }
 

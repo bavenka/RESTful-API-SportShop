@@ -12,7 +12,7 @@ import java.io.IOException;
  * Created by Павел on 20.09.2016.
  */
 @Component
-public class CorsFilter implements Filter{
+public class CorsFilter implements Filter {
     @Value("${token.header}")
     private String tokenHeader;
 

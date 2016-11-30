@@ -8,14 +8,12 @@ import com.test.service.PasswordResetTokenService;
 import com.test.utils.Constant;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -72,11 +70,11 @@ public class MailServiceImpl implements MailService {
                 + token;
     }
 
-    private String constructTextMessageToResetPassword(@NonNull User user, @NonNull String token){
+    private String constructTextMessageToResetPassword(@NonNull User user, @NonNull String token) {
         return Constant.PASSWORD_RESET_GREETING
                 + user.getUsername()
                 + Constant.PASSWORD_RESET_TEXT
-                + constructLinkToResetPassword(user,token)
+                + constructLinkToResetPassword(user, token)
                 + Constant.PASSWORD_RESET_NOTE
                 + Constant.PASSWORD_RESET_AUTHOR;
     }

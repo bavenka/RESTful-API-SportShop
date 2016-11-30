@@ -1,15 +1,11 @@
 package com.test.rest.controller;
 
 import com.test.model.dto.RoleDto;
-import com.test.model.dto.UserDto;
 import com.test.service.RoleService;
-import com.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
 
 /**
  * Created by Павел on 08.11.2016.
@@ -43,6 +39,7 @@ public class RoleController {
         }
         return new ResponseEntity<>(existingRoleDto, HttpStatus.OK);
     }
+
     @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> addRole(@PathVariable Long id,
                                      @RequestHeader(name = "Authorization") String token) throws Exception {

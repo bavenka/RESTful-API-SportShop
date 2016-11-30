@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Павел on 22.08.2016.
  */
 @Service
-public interface CategoryDao {
+public interface CategoryDao extends GenericDao<Category> {
     List<Category> getRootCategories();
-    List<Category> getChildren(Long parentId);
+    List<Category> getSubcategories(Long parentId);
 }

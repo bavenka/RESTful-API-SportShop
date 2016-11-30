@@ -38,6 +38,9 @@ public class User extends BasicEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_wishProduct", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "product_id")})
     private Set<Product> wishProducts;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "user_cartProduct", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private Set<Product> cartProducts;
 
     public User() {
     }
@@ -120,5 +123,13 @@ public class User extends BasicEntity {
 
     public void setWishProducts(Set<Product> wishProducts) {
         this.wishProducts = wishProducts;
+    }
+
+    public Set<Product> getCartProducts() {
+        return cartProducts;
+    }
+
+    public void setCartProducts(Set<Product> cartProducts) {
+        this.cartProducts = cartProducts;
     }
 }

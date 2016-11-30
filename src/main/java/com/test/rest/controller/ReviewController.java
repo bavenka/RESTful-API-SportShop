@@ -1,6 +1,5 @@
 package com.test.rest.controller;
 
-import com.test.model.dto.product.ProductDto;
 import com.test.model.dto.product.ReviewDto;
 import com.test.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "users/{userId}/reviews/{productId}", method = RequestMethod.POST)
+    @RequestMapping(value = "users/{userId}/add/reviews/{productId}", method = RequestMethod.POST)
     public ResponseEntity<?> addProduct(@RequestBody ReviewDto reviewDto,
                                         @PathVariable Long userId,
                                         @PathVariable Long productId,
@@ -30,11 +29,12 @@ public class ReviewController {
         return new ResponseEntity<>(existingReviewDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "reviews/{id}/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id,
+    @RequestMapping(value = "users/{userId}/delete/reviews/{reviewId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteProduct(@PathVariable Long userId,
+                                           @PathVariable Long reviewId,
                                            @RequestHeader(name = "Authorization") String token) throws Exception {
         try {
-            reviewService.deleteReview(id);
+            reviewService.deleteReview(userId, reviewId);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -1,7 +1,6 @@
 package com.test.rest.controller;
 
 import com.test.model.dto.CategoryDto;
-import com.test.model.dto.product.ProductDto;
 import com.test.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,12 +93,11 @@ public class CategoryController {
     @RequestMapping(value = "{childId}/delete/parent", method = RequestMethod.PUT)
     public ResponseEntity<?> deleteParentFromChild(@PathVariable("childId") Long childId,
                                                    @RequestHeader(name = "Authorization") String token) throws Exception {
-        CategoryDto existingCategoryDto;
         try {
-            existingCategoryDto = categoryService.deleteParentFromChild(childId);
+            categoryService.deleteParentFromChild(childId);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(existingCategoryDto, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

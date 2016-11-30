@@ -10,8 +10,7 @@ import java.util.Map;
  * Created by Павел on 19.11.2016.
  */
 @Service
-public interface ProductDao {
+public interface ProductDao extends GenericDao<Product> {
     List<Product> getProducts(int offset, int limit);
-
-    List<Product> findProductsByFilters(Map<String, String> filters, int offset, int limit);
+    List<Product> getProductsByFilters(Map<String, String> filters, int offset, int limit);
 }

@@ -1,4 +1,5 @@
 package com.test.model.entity.auth;
+
 import com.test.model.entity.BasicEntity;
 
 import javax.persistence.*;

@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto deleteParentFromChild(Long childId) throws Exception {
+    public void deleteParentFromChild(Long childId) throws Exception {
         Category child = categoryRepository.findOne(childId);
         if (child == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_CHILD);
@@ -80,7 +80,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         child.setParent(null);
         categoryRepository.save(child);
-        return Converter.toCategoryDto(child);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getSubcategories(Long categoryId) throws Exception {
-        List<Category> subcategories = categoryDao.getChildren(categoryId);
+        List<Category> subcategories = categoryDao.getSubcategories(categoryId);
         if (subcategories == null) {
             return null;
         }

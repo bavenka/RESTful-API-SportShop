@@ -5,7 +5,7 @@ import com.test.model.entity.auth.User;
 import com.test.model.entity.product.Product;
 import com.test.repository.ProductRepository;
 import com.test.repository.UserRepository;
-import com.test.service.WishListService;
+import com.test.service.CartService;
 import com.test.utils.Constant;
 import com.test.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Павел on 24.11.2016.
+ * Created by Pavel on 28.11.2016.
  */
 @Component
 @Transactional
-public class WishListServiceImpl implements WishListService {
+public class CartServiceImpl implements CartService {
 
     @Autowired
     private UserRepository userRepository;
@@ -28,7 +28,7 @@ public class WishListServiceImpl implements WishListService {
     private ProductRepository productRepository;
 
     @Override
-    public ProductDto addProductToWishList(Long userId, Long productId) throws Exception {
+    public ProductDto addProductToCart(Long userId, Long productId) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
@@ -37,52 +37,52 @@ public class WishListServiceImpl implements WishListService {
         if (product == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_PRODUCT);
         }
-        Set<Product> products = user.getWishProducts();
+        Set<Product> products = user.getCartProducts();
         if (products == null) {
             products = new HashSet<>();
         }
         products.add(product);
-        user.setWishProducts(products);
+        user.setCartProducts(products);
         userRepository.save(user);
         return Converter.toProductWithoutSpecificationsDto(product);
     }
 
     @Override
-    public void deleteProductFromWishList(Long userId, Long productId) throws Exception {
+    public void deleteProductFromCart(Long userId, Long productId) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
-        Set<Product> products = user.getWishProducts();
+        Set<Product> products = user.getCartProducts();
         if (products == null) {
-            throw new Exception("User has not wish products!");
+            throw new Exception("Shopping card is empty!");
         }
         Product searchedProduct = null;
-        for (Product productEntity : products) {
-            if (productEntity.getId().equals(productId)) {
-                searchedProduct = productEntity;
+        for (Product existingProduct : products) {
+            if (existingProduct.getId().equals(productId)) {
+                searchedProduct = existingProduct;
                 break;
             }
         }
         if (searchedProduct == null) {
-            throw new Exception("User has not this wish product!");
+            throw new Exception("Shopping cart has not this product!");
         }
         products.remove(searchedProduct);
-        user.setWishProducts(products);
+        user.setCartProducts(products);
         userRepository.save(user);
     }
 
     @Override
-    public Set<ProductDto> getProductsFromWishList(Long userId) throws Exception {
+    public Set<ProductDto> getProductsFromCart(Long userId) throws Exception {
         User user = userRepository.findOne(userId);
         if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
-        if (user.getWishProducts() == null) {
+        if (user.getCartProducts() == null) {
             return null;
         }
         Set<ProductDto> productDtos = new HashSet<>();
-        Set<Product> products = user.getWishProducts();
+        Set<Product> products = user.getCartProducts();
         for (Product product : products) {
             productDtos.add(Converter.toProductWithoutSpecificationsDto(product));
         }

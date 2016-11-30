@@ -1,7 +1,7 @@
 package com.test.service.Impl;
 
-import com.test.utils.JwtUtils;
 import com.test.service.AuthService;
+import com.test.utils.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Павел on 22.09.2016.

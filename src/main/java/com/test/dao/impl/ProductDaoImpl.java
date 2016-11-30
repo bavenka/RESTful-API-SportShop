@@ -4,11 +4,8 @@ import com.test.dao.ProductDao;
 import com.test.model.entity.product.AttributeName;
 import com.test.model.entity.product.Product;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -21,25 +18,23 @@ import java.util.Map;
  * Created by Павел on 19.11.2016.
  */
 @Component
-@Transactional
-public class ProductDaoImpl implements ProductDao {
-    @PersistenceContext
-    private EntityManager em;
+@Transactional(noRollbackFor = Exception.class)
+public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDao {
 
     @Override
     public List<Product> getProducts(int offset, int limit) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Product> query = builder.createQuery(Product.class);
-        Root<Product> root = query.from(Product.class);
+        CriteriaBuilder builder = getBuilder();
+        CriteriaQuery<Product> query = builder.createQuery(getPersistenceClass());
+        Root<Product> root = query.from(getPersistenceClass());
         query.select(root);
-        return em.createQuery(query).setFirstResult(offset).setMaxResults(limit).getResultList();
+        return getEntityManager().createQuery(query).setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
     @Override
-    public List<Product> findProductsByFilters(Map<String, String> filters, int offset, int limit) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Product> query = builder.createQuery(Product.class);
-        Root<Product> root = query.from(Product.class);
+    public List<Product> getProductsByFilters(Map<String, String> filters, int offset, int limit) {
+        CriteriaBuilder builder = getBuilder();
+        CriteriaQuery<Product> query = builder.createQuery(getPersistenceClass());
+        Root<Product> root = query.from(getPersistenceClass());
         List<Predicate> predicates = new ArrayList<>();
         for (Map.Entry<String, String> filter : filters.entrySet()) {
             AttributeName attributeName = AttributeName.valueOf((filter.getKey()));
@@ -75,6 +70,11 @@ public class ProductDaoImpl implements ProductDao {
             }
             query.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
         }
-        return em.createQuery(query).setFirstResult(offset).setMaxResults(limit).getResultList();
+        return getEntityManager().createQuery(query).setFirstResult(offset).setMaxResults(limit).getResultList();
+    }
+
+    @Override
+    protected Class<Product> getPersistenceClass() {
+        return Product.class;
     }
 }

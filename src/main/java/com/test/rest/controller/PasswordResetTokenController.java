@@ -1,7 +1,6 @@
 package com.test.rest.controller;
 
 import com.test.model.dto.UserDto;
-import com.test.service.AuthService;
 import com.test.service.MailService;
 import com.test.service.PasswordResetTokenService;
 import com.test.service.UserService;
@@ -12,14 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -42,8 +34,7 @@ public class PasswordResetTokenController {
 
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public ResponseEntity<?> sendMessage(HttpServletRequest request,
-                                         @RequestParam Long userId,
+    public ResponseEntity<?> sendMessage(@RequestParam Long userId,
                                          @RequestParam String email) throws Exception {
         try {
             mailService.sendMessage(userId, email);

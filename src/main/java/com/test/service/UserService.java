@@ -12,5 +12,5 @@ public interface UserService {
     UserDto findOne(Long id) throws Exception;
     UserDto update(UserDto userDto) throws Exception;
     UserDto setRoleToUser(Long userId, Long roleId) throws Exception;
-    UserDto deleteRoleFromUser(Long userId, Long roleId) throws Exception;
+    void deleteRoleFromUser(Long userId, Long roleId) throws Exception;
 }

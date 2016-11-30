@@ -9,11 +9,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "images")
-public class Image extends BasicEntity{
+public class Image extends BasicEntity {
     @Column(nullable = false)
     private String image;
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public Image() {

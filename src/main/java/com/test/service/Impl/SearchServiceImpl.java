@@ -3,7 +3,6 @@ package com.test.service.Impl;
 import com.test.dao.ProductDao;
 import com.test.model.dto.product.ProductDto;
 import com.test.model.entity.product.Product;
-import com.test.repository.ProductRepository;
 import com.test.service.SearchService;
 import com.test.utils.Converter;
 import lombok.NonNull;
@@ -34,7 +33,7 @@ public class SearchServiceImpl implements SearchService {
         if (filters.isEmpty()) {
             throw new Exception("Invalid filters data");
         }
-        Set<Product> products = productDao.findProductsByFilters(filters, offset, limit).stream().collect(Collectors.toSet());
+        Set<Product> products = productDao.getProductsByFilters(filters, offset, limit).stream().collect(Collectors.toSet());
         if (products != null) {
             List<ProductDto> productDtos = new ArrayList<>();
             for (Product product : products) {

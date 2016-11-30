@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception(Constant.MESSAGE_NOT_VALID_ROLE);
         }
         Set<Role> roles = user.getRoles();
-        if(roles == null){
+        if (roles == null) {
             roles = new HashSet<>();
         }
         roles.add(role);
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto deleteRoleFromUser(Long userId, Long roleId) throws Exception {
+    public void deleteRoleFromUser(Long userId, Long roleId) throws Exception {
         Role deletedRole = null;
         User user = userRepository.findOne(userId);
         if (user == null) {
@@ -102,18 +102,17 @@ public class UserServiceImpl implements UserService {
             throw new Exception("User has not a role!");
         }
         Set<Role> roles = user.getRoles();
-        for(Role userRole: roles){
-            if(userRole.getId().equals(roleId)){
+        for (Role userRole : roles) {
+            if (userRole.getId().equals(roleId)) {
                 deletedRole = userRole;
             }
         }
-        if(deletedRole == null){
+        if (deletedRole == null) {
             throw new Exception("User has not this role!");
         }
         roles.remove(deletedRole);
         user.setRoles(roles);
         userRepository.save(user);
-        return Converter.toUserDto(user);
     }
 
 }

@@ -31,6 +31,8 @@ public class Product extends BasicEntity {
     private String brand;
     @Column
     private String sizes;
+    @Column
+    private int count;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Image> productImages;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
@@ -40,6 +42,8 @@ public class Product extends BasicEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cartProducts")
+    private Set<User> cartUsers;
 
 
     public Product() {
@@ -147,5 +151,21 @@ public class Product extends BasicEntity {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Set<User> getCartUsers() {
+        return cartUsers;
+    }
+
+    public void setCartUsers(Set<User> cartUsers) {
+        this.cartUsers = cartUsers;
     }
 }

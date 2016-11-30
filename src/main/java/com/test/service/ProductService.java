@@ -28,6 +28,8 @@ public interface ProductService {
 
     ProductDto addCategoryToProduct(Long productId, Long categoryId) throws Exception;
 
-    ProductDto deleteCategoryFromProduct(Long productId) throws Exception;
+    void deleteCategoryFromProduct(Long productId) throws Exception;
+
+    ProductDto setCountToProduct(Long productId, int count) throws Exception;
 
 }

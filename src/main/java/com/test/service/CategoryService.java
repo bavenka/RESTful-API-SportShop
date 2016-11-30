@@ -18,7 +18,7 @@ public interface CategoryService {
 
     CategoryDto setParentToChild(Long childId, Long parentId) throws Exception;
 
-    CategoryDto deleteParentFromChild(Long childId) throws Exception;
+    void deleteParentFromChild(Long childId) throws Exception;
 
     List<CategoryDto> getRootCategories() throws Exception;
 

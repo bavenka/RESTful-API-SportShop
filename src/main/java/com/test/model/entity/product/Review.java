@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "reviews")
-public class Review extends BasicEntity{
+public class Review extends BasicEntity {
     @Column(nullable = false)
     private String comment;
     @Column(nullable = false)

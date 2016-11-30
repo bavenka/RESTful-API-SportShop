@@ -1,6 +1,5 @@
 package com.test.rest.controller;
 
-import com.test.model.dto.RoleDto;
 import com.test.model.dto.product.ProductDto;
 import com.test.model.dto.product.ReviewDto;
 import com.test.service.ProductService;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Set;
 
@@ -99,13 +97,12 @@ public class ProductController {
     @RequestMapping(value = "{productId}/delete/category", method = RequestMethod.PUT)
     public ResponseEntity<?> deleteCategoryFromProduct(@PathVariable("productId") Long productId,
                                                        @RequestHeader(name = "Authorization") String token) throws Exception {
-        ProductDto existingProductDto;
         try {
-            existingProductDto = productService.deleteCategoryFromProduct(productId);
+            productService.deleteCategoryFromProduct(productId);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(existingProductDto, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
@@ -128,5 +125,18 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(productSpecificationsDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "{productId}/add/count", method = RequestMethod.PUT)
+    public ResponseEntity<?> setCountToProduct(@PathVariable Long productId,
+                                               @RequestParam("count") int count,
+                                               @RequestHeader(name = "Authorization") String token) throws Exception {
+        ProductDto existingProductDto;
+        try {
+            existingProductDto = productService.setCountToProduct(productId, count);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingProductDto, HttpStatus.OK);
     }
 }

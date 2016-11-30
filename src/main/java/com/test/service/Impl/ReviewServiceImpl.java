@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Павел on 23.11.2016.
  */
@@ -48,8 +50,25 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteReview(Long reviewId) throws Exception {
+    public void deleteReview(Long userId, Long reviewId) throws Exception {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
+        }
+        List<Review> reviews = user.getProductReviews();
+        if (reviews == null) {
+            throw new Exception("User has not reviews");
+        }
+        Review searchedReview = null;
+        for (Review existingReview : reviews) {
+            if (existingReview.getId().equals(reviewId)) {
+                searchedReview = existingReview;
+                break;
+            }
+        }
+        if (searchedReview == null) {
+            throw new Exception(Constant.MESSAGE_NOT_FOUND_REVIEW);
+        }
         reviewRepository.delete(reviewId);
-
     }
 }

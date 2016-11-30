@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-
 /**
  * Created by Павел on 17.09.2016.
  */
@@ -56,12 +54,11 @@ public class UserController {
     public ResponseEntity<?> deleteRoleFromUser(@PathVariable("userId") Long userId,
                                                 @PathVariable("roleId") Long roleId,
                                                 @RequestHeader(name = "Authorization") String token) throws Exception {
-        UserDto existingUserDto;
         try {
-            existingUserDto = userService.deleteRoleFromUser(userId, roleId);
+            userService.deleteRoleFromUser(userId, roleId);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

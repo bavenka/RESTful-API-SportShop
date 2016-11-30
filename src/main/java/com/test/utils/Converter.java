@@ -1,11 +1,13 @@
 package com.test.utils;
 
-import com.test.model.dto.*;
+import com.test.model.dto.AddressDto;
+import com.test.model.dto.CategoryDto;
+import com.test.model.dto.RoleDto;
+import com.test.model.dto.UserDto;
 import com.test.model.dto.product.ImageDto;
 import com.test.model.dto.product.ProductDto;
 import com.test.model.dto.product.ReviewDto;
 import com.test.model.entity.auth.Address;
-import com.test.model.entity.auth.PasswordResetToken;
 import com.test.model.entity.auth.Role;
 import com.test.model.entity.auth.User;
 import com.test.model.entity.category.Category;
@@ -17,7 +19,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -130,6 +134,7 @@ public class Converter {
         product.setCode(productDto.getCode());
         product.setColor(productDto.getColor());
         product.setCountry(productDto.getCountry());
+        product.setCount(productDto.getCount());
         if (productDto.getSizes() != null) {
             product.setSizes(StringUtils.join(productDto.getSizes(), ", "));
         }
@@ -166,6 +171,7 @@ public class Converter {
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setImage(product.getImage());
+        productDto.setCount(product.getCount());
         Set<Image> images = product.getProductImages();
         if (images != null) {
             Set<ImageDto> imageDtos = new HashSet<>();

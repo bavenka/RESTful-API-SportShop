@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ReviewService {
     ReviewDto addReview(Long userId, ReviewDto reviewDto, Long productId) throws Exception;
-    void deleteReview(Long productId) throws Exception;
+    void deleteReview(Long userId, Long reviewId) throws Exception;
 }
