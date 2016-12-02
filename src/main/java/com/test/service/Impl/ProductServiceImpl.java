@@ -1,12 +1,12 @@
 package com.test.service.Impl;
 
 import com.test.dao.ProductDao;
-import com.test.model.dto.product.ProductDto;
-import com.test.model.dto.product.ReviewDto;
-import com.test.model.entity.auth.User;
-import com.test.model.entity.category.Category;
-import com.test.model.entity.product.Product;
-import com.test.model.entity.product.Review;
+import com.test.model.dto.ProductDto;
+import com.test.model.dto.ReviewDto;
+import com.test.model.entity.User;
+import com.test.model.entity.Category;
+import com.test.model.entity.Product;
+import com.test.model.entity.Review;
 import com.test.repository.CategoryRepository;
 import com.test.repository.ProductRepository;
 import com.test.repository.UserRepository;
@@ -169,24 +169,5 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setCategory(null);
         productRepository.save(product);
-    }
-
-    @Override
-    public ProductDto setCountToProduct(Long productId, int count) throws Exception {
-        Product product = productRepository.findOne(productId);
-        if (product == null) {
-            throw new Exception(Constant.MESSAGE_NOT_FOUND_PRODUCT);
-        }
-        if (count < 0) {
-            throw new Exception(Constant.MESSAGE_NOT_VALID_COUNT);
-        }
-        int productCount = product.getCount();
-        if(productCount == 0){
-            product.setCount(count);
-        }
-        productCount += count;
-        product.setCount(productCount);
-        productRepository.save(product);
-        return Converter.toProductWithoutSpecificationsDto(product);
     }
 }

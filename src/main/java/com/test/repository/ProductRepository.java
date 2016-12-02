@@ -1,6 +1,6 @@
 package com.test.repository;
 
-import com.test.model.entity.product.Product;
+import com.test.model.entity.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 

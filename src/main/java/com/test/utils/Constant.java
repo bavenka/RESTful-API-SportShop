@@ -25,5 +25,7 @@ public class Constant {
     public static final String MESSAGE_NOT_FOUND_CHILD = "Child is not found.";
     public static final String MESSAGE_NOT_FOUND_PARENT = "Parent is not found.";
     public static final String MESSAGE_NOT_VALID_COUNT = "Count is not valid.";
-    public static final String MESSAGE_NOT_FOUND_REVIEW = " Review is not found.";
+    public static final String MESSAGE_NOT_FOUND_REVIEW = "Review is not found.";
+    public static final String MESSAGE_EMPTY_CART = "Shopping cart is empty.";
+    public static final String MESSAGE_NOT_FOUND_ORDER = "Order is not found.";
 }

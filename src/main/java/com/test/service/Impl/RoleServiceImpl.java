@@ -1,8 +1,8 @@
 package com.test.service.Impl;
 
 import com.test.model.dto.RoleDto;
-import com.test.model.entity.auth.Role;
-import com.test.model.entity.auth.RoleName;
+import com.test.model.entity.Role;
+import com.test.model.entity.RoleName;
 import com.test.repository.RoleRepository;
 import com.test.service.RoleService;
 import com.test.utils.Constant;

@@ -1,6 +1,6 @@
 package com.test.repository;
 
-import com.test.model.entity.auth.Role;
+import com.test.model.entity.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 

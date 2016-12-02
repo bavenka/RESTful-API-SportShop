@@ -1,4 +1,4 @@
-package com.test.model.entity.product;
+package com.test.model.entity;
 
 /**
  * Created by Павел on 02.09.2016.

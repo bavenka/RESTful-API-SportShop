@@ -1,6 +1,6 @@
 package com.test.service;
 
-import com.test.model.dto.product.ReviewDto;
+import com.test.model.dto.ReviewDto;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,8 +1,8 @@
 package com.test.service.Impl;
 
-import com.test.model.dto.product.ProductDto;
-import com.test.model.entity.auth.User;
-import com.test.model.entity.product.Product;
+import com.test.model.dto.ProductDto;
+import com.test.model.entity.User;
+import com.test.model.entity.Product;
 import com.test.repository.ProductRepository;
 import com.test.repository.UserRepository;
 import com.test.service.WishListService;

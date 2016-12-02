@@ -1,6 +1,6 @@
 package com.test.rest.controller;
 
-import com.test.model.dto.product.ProductDto;
+import com.test.model.dto.ProductDto;
 import com.test.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

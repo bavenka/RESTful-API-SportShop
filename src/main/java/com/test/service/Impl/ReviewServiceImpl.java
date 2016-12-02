@@ -1,9 +1,9 @@
 package com.test.service.Impl;
 
-import com.test.model.dto.product.ReviewDto;
-import com.test.model.entity.auth.User;
-import com.test.model.entity.product.Product;
-import com.test.model.entity.product.Review;
+import com.test.model.dto.ReviewDto;
+import com.test.model.entity.User;
+import com.test.model.entity.Product;
+import com.test.model.entity.Review;
 import com.test.repository.ProductRepository;
 import com.test.repository.ReviewRepository;
 import com.test.repository.UserRepository;
@@ -69,6 +69,6 @@ public class ReviewServiceImpl implements ReviewService {
         if (searchedReview == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_REVIEW);
         }
-        reviewRepository.delete(reviewId);
+        reviewRepository.delete(searchedReview.getId());
     }
 }

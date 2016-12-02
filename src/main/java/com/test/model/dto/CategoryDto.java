@@ -1,7 +1,8 @@
 package com.test.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -9,7 +10,8 @@ import java.util.Set;
  * Created by Павел on 22.08.2016.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
+@Getter
+@Setter
 public class CategoryDto {
     private Long id;
     private String name;

@@ -1,7 +1,7 @@
 package com.test.service.Impl;
 
-import com.test.model.entity.auth.PasswordResetToken;
-import com.test.model.entity.auth.User;
+import com.test.model.entity.PasswordResetToken;
+import com.test.model.entity.User;
 import com.test.repository.UserRepository;
 import com.test.service.MailService;
 import com.test.service.PasswordResetTokenService;

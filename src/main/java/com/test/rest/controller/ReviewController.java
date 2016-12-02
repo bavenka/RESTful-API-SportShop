@@ -1,6 +1,6 @@
 package com.test.rest.controller;
 
-import com.test.model.dto.product.ReviewDto;
+import com.test.model.dto.ReviewDto;
 import com.test.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

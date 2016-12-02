@@ -1,8 +1,8 @@
 package com.test.service.Impl;
 
 import com.test.dao.ProductDao;
-import com.test.model.dto.product.ProductDto;
-import com.test.model.entity.product.Product;
+import com.test.model.dto.ProductDto;
+import com.test.model.entity.Product;
 import com.test.service.SearchService;
 import com.test.utils.Converter;
 import lombok.NonNull;

@@ -1,6 +1,6 @@
 package com.test.service;
 
-import com.test.model.dto.product.ProductDto;
+import com.test.model.dto.ProductDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

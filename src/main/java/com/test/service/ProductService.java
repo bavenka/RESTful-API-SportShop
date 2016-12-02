@@ -1,7 +1,7 @@
 package com.test.service;
 
-import com.test.model.dto.product.ProductDto;
-import com.test.model.dto.product.ReviewDto;
+import com.test.model.dto.ProductDto;
+import com.test.model.dto.ReviewDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +29,4 @@ public interface ProductService {
     ProductDto addCategoryToProduct(Long productId, Long categoryId) throws Exception;
 
     void deleteCategoryFromProduct(Long productId) throws Exception;
-
-    ProductDto setCountToProduct(Long productId, int count) throws Exception;
-
 }

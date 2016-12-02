@@ -1,6 +1,6 @@
 package com.test.rest.controller;
 
-import com.test.model.dto.product.ProductDto;
+import com.test.model.dto.ProductDto;
 import com.test.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,8 @@ public class WishListController {
     }
 
     @RequestMapping(value = "{userId}/wishlist", method = RequestMethod.GET)
-    public ResponseEntity<?> getProductReviews(@PathVariable("userId") Long userId) throws Exception {
+    public ResponseEntity<?> getProductsFromWishList(@PathVariable("userId") Long userId,
+                                                     @RequestHeader(name = "Authorization") String token) throws Exception {
         Set<ProductDto> productDtos;
         try {
             productDtos = wishListService.getProductsFromWishList(userId);

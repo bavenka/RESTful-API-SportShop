@@ -1,8 +1,8 @@
 package com.test.dao.impl;
 
 import com.test.dao.ProductDao;
-import com.test.model.entity.product.AttributeName;
-import com.test.model.entity.product.Product;
+import com.test.model.entity.AttributeName;
+import com.test.model.entity.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

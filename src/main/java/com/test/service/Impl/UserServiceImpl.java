@@ -1,7 +1,7 @@
 package com.test.service.Impl;
 
-import com.test.model.entity.auth.Role;
-import com.test.model.entity.auth.User;
+import com.test.model.entity.Role;
+import com.test.model.entity.User;
 import com.test.model.dto.UserDto;
 //import com.test.repository.PasswordResetTokenRepository;
 import com.test.repository.RoleRepository;

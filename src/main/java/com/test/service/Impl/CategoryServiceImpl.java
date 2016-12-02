@@ -2,7 +2,7 @@ package com.test.service.Impl;
 
 import com.test.dao.CategoryDao;
 import com.test.model.dto.CategoryDto;
-import com.test.model.entity.category.Category;
+import com.test.model.entity.Category;
 import com.test.repository.CategoryRepository;
 import com.test.service.CategoryService;
 import com.test.utils.Constant;

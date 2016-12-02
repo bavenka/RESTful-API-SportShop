@@ -1,8 +1,9 @@
-package com.test.model.dto.product;
+package com.test.model.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -10,7 +11,8 @@ import java.util.Set;
  * Created by Павел on 17.08.2016.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Data
+@Getter
+@Setter
 public class ProductDto {
     private Long id;
     private String name;
@@ -21,13 +23,12 @@ public class ProductDto {
     private String country;
     private String code;
     private String brand;
-    private int count;
     private Boolean isFavorite;
     private Set<String> sizes;
     private Set<ReviewDto> reviews;
     private Set<ImageDto> images;
+    private CategoryDto category;
 
     public ProductDto() {
-
     }
 }

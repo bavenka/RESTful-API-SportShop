@@ -1,19 +1,7 @@
 package com.test.utils;
 
-import com.test.model.dto.AddressDto;
-import com.test.model.dto.CategoryDto;
-import com.test.model.dto.RoleDto;
-import com.test.model.dto.UserDto;
-import com.test.model.dto.product.ImageDto;
-import com.test.model.dto.product.ProductDto;
-import com.test.model.dto.product.ReviewDto;
-import com.test.model.entity.auth.Address;
-import com.test.model.entity.auth.Role;
-import com.test.model.entity.auth.User;
-import com.test.model.entity.category.Category;
-import com.test.model.entity.product.Image;
-import com.test.model.entity.product.Product;
-import com.test.model.entity.product.Review;
+import com.test.model.dto.*;
+import com.test.model.entity.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,6 +24,7 @@ public class Converter {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setName(userDto.getName());
         user.setPhone(userDto.getPhone());
+        user.setBalance(userDto.getBalance());
         AddressDto addressDto = userDto.getAddress();
         if (addressDto != null) {
             Address address = toAddressEntity(addressDto);
@@ -61,6 +50,7 @@ public class Converter {
         userDto.setPassword(user.getPassword());
         userDto.setPhone(user.getPhone());
         userDto.setName(user.getName());
+        userDto.setBalance(user.getBalance());
         Address address = user.getAddress();
         if (address != null) {
             AddressDto addressDto = toAddressDto(address);
@@ -134,7 +124,6 @@ public class Converter {
         product.setCode(productDto.getCode());
         product.setColor(productDto.getColor());
         product.setCountry(productDto.getCountry());
-        product.setCount(productDto.getCount());
         if (productDto.getSizes() != null) {
             product.setSizes(StringUtils.join(productDto.getSizes(), ", "));
         }
@@ -161,6 +150,11 @@ public class Converter {
             }
             product.setProductReviews(reviews);
         }
+        CategoryDto categoryDto = productDto.getCategory();
+        if (categoryDto != null) {
+            Category category = toCategory(categoryDto);
+            product.setCategory(category);
+        }
         return product;
     }
 
@@ -171,7 +165,6 @@ public class Converter {
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setImage(product.getImage());
-        productDto.setCount(product.getCount());
         Set<Image> images = product.getProductImages();
         if (images != null) {
             Set<ImageDto> imageDtos = new HashSet<>();
@@ -250,6 +243,22 @@ public class Converter {
         categoryDto.setName(category.getName());
         categoryDto.setImage(category.getImage());
         return categoryDto;
+    }
+
+    public static OrderDto toOrderDto(Order orderEntity) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(orderEntity.getId());
+        orderDto.setStatus(orderEntity.getStatus().name());
+        orderDto.setDate(orderEntity.getDate());
+        Set<Product> products = orderEntity.getOrderProducts();
+        if (products != null) {
+            Set<ProductDto> productDtos = new HashSet<>();
+            for (Product product : products) {
+                productDtos.add(toProductWithoutSpecificationsDto(product));
+            }
+            orderDto.setProducts(productDtos);
+        }
+        return orderDto;
     }
 
 }

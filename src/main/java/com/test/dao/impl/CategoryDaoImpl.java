@@ -1,7 +1,7 @@
 package com.test.dao.impl;
 
 import com.test.dao.CategoryDao;
-import com.test.model.entity.category.Category;
+import com.test.model.entity.Category;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;

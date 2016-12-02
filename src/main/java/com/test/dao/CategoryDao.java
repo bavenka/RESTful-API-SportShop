@@ -1,6 +1,6 @@
 package com.test.dao;
 
-import com.test.model.entity.category.Category;
+import com.test.model.entity.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
