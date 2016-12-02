@@ -13,12 +13,11 @@ import java.util.List;
  * Created by Павел on 19.11.2016.
  */
 @RestController
-@RequestMapping("${route.categories}")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "categories", method = RequestMethod.GET)
     public ResponseEntity<?> getRootCategories() throws Exception {
 
         List<CategoryDto> categoryDtos;
@@ -30,7 +29,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "category/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getSubcategories(@PathVariable Long id) throws Exception {
 
         List<CategoryDto> categoryDtos;
@@ -42,7 +41,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/category/update", method = RequestMethod.PUT)
     public ResponseEntity<?> updateCategory(@RequestBody CategoryDto categoryDto,
                                             @RequestHeader(name = "Authorization") String token) throws Exception {
         CategoryDto existingCategoryDto;
@@ -54,7 +53,7 @@ public class CategoryController {
         return new ResponseEntity<>(existingCategoryDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/category/add", method = RequestMethod.POST)
     public ResponseEntity<?> addCategory(@RequestBody CategoryDto categoryDto,
                                          @RequestHeader(name = "Authorization") String token) throws Exception {
         CategoryDto existingCategoryDto;
@@ -66,7 +65,7 @@ public class CategoryController {
         return new ResponseEntity<>(existingCategoryDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "admin/category/{id}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteCategory(@PathVariable Long id,
                                             @RequestHeader(name = "Authorization") String token) throws Exception {
         try {
@@ -77,7 +76,7 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "{childId}/add/parent/{parentId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/subcategory/{childId}/add/category/{parentId}", method = RequestMethod.PUT)
     public ResponseEntity<?> setParentToChild(@PathVariable("childId") Long childId,
                                               @PathVariable("parentId") Long parentId,
                                               @RequestHeader(name = "Authorization") String token) throws Exception {
@@ -90,7 +89,7 @@ public class CategoryController {
         return new ResponseEntity<>(existingCategoryDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{childId}/delete/parent", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/subcategory/{childId}/delete/category", method = RequestMethod.PUT)
     public ResponseEntity<?> deleteParentFromChild(@PathVariable("childId") Long childId,
                                                    @RequestHeader(name = "Authorization") String token) throws Exception {
         try {

@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
  * Created by Павел on 08.11.2016.
  */
 @RestController
-@RequestMapping("${route.roles}")
 public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/role/update", method = RequestMethod.PUT)
     public ResponseEntity<?> editRole(@RequestBody RoleDto roleDto,
                                       @RequestHeader(name = "Authorization") String token) throws Exception {
         RoleDto existingRoleDto;
@@ -28,7 +27,7 @@ public class RoleController {
         return new ResponseEntity<>(existingRoleDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/role/add", method = RequestMethod.POST)
     public ResponseEntity<?> addRole(@RequestBody RoleDto roleDto,
                                      @RequestHeader(name = "Authorization") String token) throws Exception {
         RoleDto existingRoleDto;
@@ -40,7 +39,7 @@ public class RoleController {
         return new ResponseEntity<>(existingRoleDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "admin/role/{id}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> addRole(@PathVariable Long id,
                                      @RequestHeader(name = "Authorization") String token) throws Exception {
         try {

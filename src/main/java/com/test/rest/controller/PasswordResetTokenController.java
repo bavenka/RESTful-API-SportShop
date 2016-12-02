@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("${route.users}")
 public class PasswordResetTokenController {
     @Autowired
     private MailService mailService;
@@ -33,7 +32,7 @@ public class PasswordResetTokenController {
     private JwtUtils jwtUtils;
 
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "auth/resetPassword", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(@RequestParam Long userId,
                                          @RequestParam String email) throws Exception {
         try {
@@ -44,7 +43,7 @@ public class PasswordResetTokenController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    @RequestMapping(value = "auth/changePassword", method = RequestMethod.GET)
     public ResponseEntity<?> changePassword(@RequestParam(name = "id") Long userId,
                                             @RequestParam(name = "token") String token,
                                             Device device) throws Exception {
@@ -65,7 +64,7 @@ public class PasswordResetTokenController {
         }
     }
 
-    @RequestMapping(value = "/savePassword", method = RequestMethod.PUT)
+    @RequestMapping(value = "user/savePassword", method = RequestMethod.PUT)
     public ResponseEntity<?> updatePassword(@RequestHeader(name = "Authorization") String token,
                                             @RequestParam String newPassword) throws Exception {
         try {

@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
  * Created by Павел on 17.09.2016.
  */
 @RestController
-@RequestMapping("${route.users}")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) throws Exception {
         UserDto userDto = userService.findOne(id);
         if (userDto == null) {
@@ -25,7 +24,7 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.FOUND);
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    @RequestMapping(value = "user/update", method = RequestMethod.PUT)
     public ResponseEntity<?> getUser(@RequestBody UserDto userDto,
                                      @RequestHeader(name = "Authorization") String token) throws Exception {
         UserDto existingUserDto;
@@ -37,7 +36,7 @@ public class UserController {
         return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{userId}/add/role/{roleId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/user/{userId}/add/role/{roleId}", method = RequestMethod.PUT)
     public ResponseEntity<?> setRoleToUser(@PathVariable("userId") Long userId,
                                            @PathVariable("roleId") Long roleId,
                                            @RequestHeader(name = "Authorization") String token) throws Exception {
@@ -50,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(existingUserDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{userId}/delete/role/{roleId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "admin/user/{userId}/delete/role/{roleId}", method = RequestMethod.PUT)
     public ResponseEntity<?> deleteRoleFromUser(@PathVariable("userId") Long userId,
                                                 @PathVariable("roleId") Long roleId,
                                                 @RequestHeader(name = "Authorization") String token) throws Exception {

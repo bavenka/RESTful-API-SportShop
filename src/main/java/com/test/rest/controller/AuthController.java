@@ -3,6 +3,7 @@ package com.test.rest.controller;
 import com.test.model.dto.UserDto;
 import com.test.service.AuthService;
 import com.test.service.UserService;
+import com.test.service.VkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private VkService vkService;
 
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody UserDto userDto) throws Exception {
@@ -41,5 +44,12 @@ public class AuthController {
         }
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
-
+    @RequestMapping(value = "signin/vk", method = RequestMethod.POST)
+    public void VkAuthentication(Device device) {
+        try {
+            vkService.openAuthorizationDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

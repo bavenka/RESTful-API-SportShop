@@ -66,11 +66,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/search**").permitAll()
-                .antMatchers("/users/resetPassword**", "/users/changePassword**").permitAll()
-                .antMatchers("/categories", "/categories/{\\d+}").permitAll()
-                .antMatchers("/catalog", "catalog/{\\d+}", "/catalog/{\\d+}/reviews", "/catalog/{\\d+}/specifications").permitAll()
+                .antMatchers("/categories**","category/**").permitAll()
+                .antMatchers("/catalog**").permitAll()
                 .anyRequest().authenticated();
         httpSecurity
                 .addFilterBefore(authenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);

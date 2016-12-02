@@ -13,16 +13,16 @@ import java.util.Set;
  * Created by Pavel on 29.11.2016.
  */
 @RestController
-@RequestMapping("${route.users}")
+@RequestMapping("${route.user}")
 public class CartController {
 
     @Autowired
     private CartService cartService;
 
     @RequestMapping(value = "{userId}/cart/add/{productId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> addProductToWishList(@PathVariable("userId") Long userId,
-                                                  @PathVariable("productId") Long productId,
-                                                  @RequestHeader(name = "Authorization") String token) throws Exception {
+    public ResponseEntity<?> addProductToCart(@PathVariable("userId") Long userId,
+                                              @PathVariable("productId") Long productId,
+                                              @RequestHeader(name = "Authorization") String token) throws Exception {
         ProductDto existingProductDto;
         try {
             existingProductDto = cartService.addProductToCart(userId, productId);
@@ -33,9 +33,9 @@ public class CartController {
     }
 
     @RequestMapping(value = "{userId}/cart/delete/{productId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> deleteProductFromWishList(@PathVariable("userId") Long userId,
-                                                       @PathVariable("productId") Long productId,
-                                                       @RequestHeader(name = "Authorization") String token) throws Exception {
+    public ResponseEntity<?> deleteProductFromCart(@PathVariable("userId") Long userId,
+                                                   @PathVariable("productId") Long productId,
+                                                   @RequestHeader(name = "Authorization") String token) throws Exception {
         try {
             cartService.deleteProductFromCart(userId, productId);
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class CartController {
     }
 
     @RequestMapping(value = "{userId}/cart", method = RequestMethod.GET)
-    public ResponseEntity<?> getProductReviews(@PathVariable("userId") Long userId) throws Exception {
+    public ResponseEntity<?> getProductsFromCart(@PathVariable("userId") Long userId) throws Exception {
         Set<ProductDto> productDtos;
         try {
             productDtos = cartService.getProductsFromCart(userId);

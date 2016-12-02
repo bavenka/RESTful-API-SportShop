@@ -15,8 +15,8 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "users/{userId}/add/reviews/{productId}", method = RequestMethod.POST)
-    public ResponseEntity<?> addProduct(@RequestBody ReviewDto reviewDto,
+    @RequestMapping(value = "user/{userId}/add/reviews/{productId}", method = RequestMethod.POST)
+    public ResponseEntity<?> addReview(@RequestBody ReviewDto reviewDto,
                                         @PathVariable Long userId,
                                         @PathVariable Long productId,
                                         @RequestHeader(name = "Authorization") String token) throws Exception {
@@ -29,8 +29,8 @@ public class ReviewController {
         return new ResponseEntity<>(existingReviewDto, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "users/{userId}/delete/reviews/{reviewId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable Long userId,
+    @RequestMapping(value = "user/{userId}/delete/reviews/{reviewId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteReview(@PathVariable Long userId,
                                            @PathVariable Long reviewId,
                                            @RequestHeader(name = "Authorization") String token) throws Exception {
         try {
