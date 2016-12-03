@@ -13,13 +13,13 @@ import java.util.Set;
  * Created by Pavel on 29.11.2016.
  */
 @RestController
-@RequestMapping("${route.user}")
+@RequestMapping("${route.users}")
 public class CartController {
 
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value = "{userId}/cart/add/{productId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{userId}/cart/add/{productId}", method = RequestMethod.POST)
     public ResponseEntity<?> addProductToCart(@PathVariable("userId") Long userId,
                                               @PathVariable("productId") Long productId,
                                               @RequestHeader(name = "Authorization") String token) throws Exception {

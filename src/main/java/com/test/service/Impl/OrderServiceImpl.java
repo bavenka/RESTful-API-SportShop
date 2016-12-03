@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
         Set<Product> products = user.getCartProducts();
-        if (products == null) {
+        if (products.isEmpty()) {
             throw new Exception(Constant.MESSAGE_EMPTY_CART);
         }
         Set<Product> existingProducts = new HashSet<>();
@@ -66,21 +66,21 @@ public class OrderServiceImpl implements OrderService {
     public void payOrder(Long userId, Long orderId) throws Exception {
         Double orderCost = 0.0;
         User user = userRepository.findOne(userId);
-        if(user == null){
+        if (user == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_USER);
         }
         Order order = orderRepository.findOne(orderId);
-        if(order == null){
+        if (order == null) {
             throw new Exception(Constant.MESSAGE_NOT_FOUND_ORDER);
         }
-        if(!order.getUser().getId().equals(userId)){
+        if (!order.getUser().getId().equals(userId)) {
             throw new Exception("User has not this order!");
         }
         Set<Product> products = order.getOrderProducts();
-        for(Product product : products){
+        for (Product product : products) {
             orderCost += product.getPrice();
         }
-        if(orderCost > user.getBalance()){
+        if (orderCost > user.getBalance()) {
             throw new Exception("User has not so money!");
         }
         user.setBalance(user.getBalance() - orderCost);
